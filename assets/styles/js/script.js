@@ -37,7 +37,7 @@ $(".current-day").text("Today is " + moment().format('dddd'));
 var seperate = moment().endOf('day').fromNow().split(" ");
 var timeLeft = $("#time-left").text(seperate[1] + " " + seperate[2] + " left to play video games");
 
-//calculates tiem to beat in x amount of days
+//calculates time to beat in x amount of days
 submitDays.on("click", function timeBeatGame() {
     // let timeLeft = seperate[1]
     var userCurrentGame = JSON.parse(localStorage.getItem("userGame"));
@@ -224,13 +224,13 @@ function getGameAPI(searchTerm) {
     var platformsJoined = platforms.join(",");
     var baseUrl = "https://rawg-video-games-database.p.rapidapi.com/games";
     var query = baseUrl + "?search=" + searchTerm + "&page_size=100&search_exact=true&platforms=" + platformsJoined;
-    // var query = baseUrl
     //we now limit search terms to 5
     console.log(query)
     return fetch(query, {
         "method": "GET",
         "headers": {
-            "x-rapidapi-key": "053771b544msh062425a81420fa7p141f95jsn3af99f464143",
+            "x-rapidapi-key": "1106950b9dmshf48984ce0c10169p1b65adjsn6b26758c20f9",
+            
             "x-rapidapi-host": "rawg-video-games-database.p.rapidapi.com"
         }
     });
@@ -240,10 +240,13 @@ $("#find-game").on("click", function(event) {
 	event.preventDefault();
 	var game = $("#search-game").val().split(" ").join("-");
     getGameAPI(game)
+    console.log(getGameAPI())
     .then(function(response) {
+        console.log(response, "first response")
         return response.json()
     })
     .then(function(data) {
+        console.log(data)
         if(data.redirect) {
             console.log('first condition triggered')
             getGameAPI(data.slug)
